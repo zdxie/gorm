@@ -152,6 +152,11 @@ func (s *DB) SetLogger(log logger) {
 	s.logger = log
 }
 
+// Context set context
+func (s *DB) Context(ctx context.Context) {
+	s.Ctx = ctx
+}
+
 // LogMode set log mode, `true` for detailed logs, `false` for no log, default, will only print error logs
 func (s *DB) LogMode(enable bool) *DB {
 	if enable {
