@@ -14,6 +14,7 @@ import (
 // DB contains information for current db connection
 type DB struct {
 	sync.RWMutex
+	Ctx          context.Context
 	Value        interface{}
 	Error        error
 	RowsAffected int64
@@ -838,7 +839,7 @@ func (s *DB) clone() *DB {
 }
 
 func (s *DB) print(v ...interface{}) {
-	s.logger.Print(v...)
+	s.logger.Print(s.Ctx, v...)
 }
 
 func (s *DB) log(v ...interface{}) {
