@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"context"
 	"database/sql/driver"
 	"fmt"
 	"log"
@@ -118,7 +119,7 @@ var LogFormatter = func(values ...interface{}) (messages []interface{}) {
 }
 
 type logger interface {
-	Print(v ...interface{})
+	Print(ctx context.Context, v ...interface{})
 }
 
 // LogWriter log writer interface
@@ -132,7 +133,7 @@ type Logger struct {
 }
 
 // Print format & print log
-func (logger Logger) Print(values ...interface{}) {
+func (logger Logger) Print(ctx context.Context, values ...interface{}) {
 	logger.Println(LogFormatter(values...)...)
 }
 
