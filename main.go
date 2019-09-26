@@ -478,7 +478,8 @@ func (s *DB) UpdateColumns(values interface{}) *DB {
 func (s *DB) Save(value interface{}) *DB {
 	scope := s.NewScope(value)
 	if !scope.PrimaryKeyZero() {
-		newDB := scope.callCallbacks(s.parent.callbacks.updates).db
+		scope.selectAttrs = &([]string{"*"})
+		newDB := scope.InstanceSet("gorm:update_interface", value).callCallbacks(s.parent.callbacks.updates).db
 		if newDB.Error == nil && newDB.RowsAffected == 0 {
 			return s.New().Table(scope.TableName()).FirstOrCreate(value)
 		}
