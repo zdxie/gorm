@@ -56,7 +56,7 @@ func OpenTestConnection() (db *gorm.DB, err error) {
 	case "postgres":
 		fmt.Println("testing postgres...")
 		if dbDSN == "" {
-			dbDSN = "user=gorm password=gorm DB.name=gorm port=9920 sslmode=disable"
+			dbDSN = "user=gorm password=gorm dbname=gorm port=9920 sslmode=disable"
 		}
 		db, err = gorm.Open("postgres", dbDSN)
 	case "mssql":
