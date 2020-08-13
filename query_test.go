@@ -41,6 +41,24 @@ func TestFirstAndLast(t *testing.T) {
 	}
 }
 
+func TestQueryWithAssociation(t *testing.T) {
+	user := &User{Name: "user1", Emails: []Email{{Email: "user1@example.com"}}, Company: Company{Name: "company"}}
+
+	if err := DB.Create(&user).Error; err != nil {
+		t.Fatalf("errors happened when create user: %v", err)
+	}
+
+	user.CreatedAt = time.Time{}
+	user.UpdatedAt = time.Time{}
+	if err := DB.Where(&user).First(&User{}).Error; err != nil {
+		t.Errorf("search with struct with association should returns no error, but got %v", err)
+	}
+
+	if err := DB.Where(user).First(&User{}).Error; err != nil {
+		t.Errorf("search with struct with association should returns no error, but got %v", err)
+	}
+}
+
 func TestFirstAndLastWithNoStdPrimaryKey(t *testing.T) {
 	DB.Save(&Animal{Name: "animal1"})
 	DB.Save(&Animal{Name: "animal2"})
