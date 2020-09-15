@@ -85,7 +85,10 @@ func Open(dialect string, args ...interface{}) (db *DB, err error) {
 	db = &DB{
 		db:        dbSQL,
 		logger:    defaultLogger,
-		callbacks: DefaultCallback,
+		
+		// Create a clone of the default logger to avoid mutating a shared object when
+		// multiple gorm connections are created simultaneously.
+		callbacks: DefaultCallback.clone(defaultLogger),
 		dialect:   newDialect(dialect, dbSQL),
 	}
 	db.parent = db
