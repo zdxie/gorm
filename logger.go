@@ -139,4 +139,4 @@ func (logger Logger) Print(ctx context.Context, values ...interface{}) {
 
 type nopLogger struct{}
 
-func (nopLogger) Print(values ...interface{}) {}
+func (nopLogger) Print(ctx context.Context, values ...interface{}) {}

@@ -3,3 +3,4 @@ coverage.txt
 _book
 /vendor
 /.idea
+/go.sum
